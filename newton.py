@@ -17,7 +17,7 @@ class Newton:
         self.subtraction:int = 0
 
     def run(self):
-        # self.display_polynomial()  # Temporarily disabled due to Unicode issues
+        self.display_polynomial()  
         self.print_error_statistics()
         self.plot()
         print("addition count for newton interpolation & expanding newton polynomial: ",self.addition)
@@ -35,7 +35,6 @@ class Newton:
             print("Error statistics only available for function-based interpolation")
             return
             
-        # Use the provided points for error calculation
         if isinstance(self.points, dict):
             pts = np.array(list(self.points.keys()))
         else:
@@ -43,7 +42,6 @@ class Newton:
             
         coeffs = self.divided_differences(pts)
         
-        # Evaluate on a fine grid
         x_eval = np.arange(self.lower, self.upper, 0.05)
         y_true = self.f(x_eval)
         y_interp = np.array([self.eval_newton(xi, pts, coeffs) for xi in x_eval])
@@ -194,8 +192,20 @@ class Newton:
             new_poly[1:] += -points[i-1] * poly
             new_poly[-1] += coeffs[i]
             poly = new_poly
-        
+
         return poly
+
+
+    def eval_horner(self, coeffs: np.ndarray, x: float) -> float:
+        result = coeffs[0]
+        for i in range(1, len(coeffs)):
+            result = result * x + coeffs[i]
+        return result
+
+    def get_horner_string(self, coeffs):
+        if len(coeffs) == 1:
+            return f"{coeffs[0]:.2e}"
+        return f"{coeffs[0]:.2e} + x * ({self.get_horner_string(coeffs[1:])})"
 
 
     def display_polynomial(self) -> None:
@@ -266,6 +276,11 @@ class Newton:
                     terms.append(f"{c:.2e}*x^{power}")
         
         print(" + ".join(terms).replace(" + -", " - "))
+
+        print("HORNER'S FORM - Nested Multiplication:")
+        print("P(x) = ", end="")
+        horner_str = self.get_horner_string(simple_coeffs)
+        print(horner_str)
         
 
 
