@@ -1,0 +1,478 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lagrange and Newton Interpolation Operation Analysis</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 40px;
+        background: #fafafa;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+      code {
+        background: #272822;
+        color: #f8f8f2;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+      pre {
+        background: #272822;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 6px;
+        overflow-x: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+      }
+      img {
+        width: 80%;
+        padding: 20px;
+        border-radius: 14%;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+      }
+      th {
+        background: #2c3e50;
+        color: white;
+      }
+      tr:nth-child(even) {
+        background: #f2f2f2;
+      }
+      .box {
+        background: #ecf0f1;
+        padding: 15px;
+        border-radius: 6px;
+      }
+      .Command {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>1. Error analysis</h1>
+    <hr />
+    <h1>1.1 Lagrange method</h1>
+    <p>
+      For <code>f(x) = ln(x) - 2(x-1)/x</code>&nbsp; we can see for each
+      interpolation when we add more points inside the intervale of
+      <code>[1,10]</code>&nbsp;the absolute error decrease untill arrive to
+      minimum limit estimated by <code>1.78e-14</code>&nbsp; for <b>11</b> nodes
+      and <b>90</b> points (<code
+        >x = np.arange(self.lower,self. upper, 0.1)</code
+      >
+      when <code>self.lower=1</code> and <code>self. upper=10</code>) &nbsp; so
+      this error value is larger 80 time then <b>epsilon</b> and we can say that
+      it approaches to 0.
+    </p>
+
+    <table>
+      <tr>
+        <th>Nodes count</th>
+        <th>Error range</th>
+        <th>Command</th>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><b> [0.00e+00, 1.15e-01]</b></td>
+        <td colspan="3" class="Command">
+          <code>python main.py --Lagrange -f -x 1 2 4 8 10 -i 1 10</code>
+        </td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><b>[0.00e+00, 1.35e-01]</b></td>
+        <td colspan="3" class="Command">
+          <code>python main.py --Lagrange -f -x 1 2 3 4 5 8 10 -i 1 10</code>
+        </td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td><b>[3.11e-15, 1.93e-02]</b></td>
+        <td colspan="3" class="Command">
+          <code
+            >python main.py --Lagrange -f -x 1 2 3 4 5 7 8 9 10 -i 1 10</code
+          >
+        </td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td><b>[1.78e-14, 3.01e-03]</b></td>
+        <td colspan="3" class="Command">
+          <code
+            >python main.py --Lagrange -f -x 1 1.2 2 3 4 5 7 8 9 9.5 10 -i 1
+            10</code
+          >
+        </td>
+      </tr>
+    </table>
+    <br /><br />
+    <aside>
+      <details>
+        <summary>click to see the plots</summary>
+        <img
+          src="images/lagrange/Lagrange with 5 points.png"
+          alt="Lagrange interpolation with 5 points"
+          title="this is Lagrange interpolation with 5 points"
+        />
+        <img
+          src="images/lagrange/Lagrange with 7 points.png"
+          alt="Lagrange interpolation with 7 points"
+          title="this is Lagrange interpolation with 7 points"
+        />
+        <img
+          src="images/lagrange/Lagrange with 9 points.png"
+          alt="Lagrange interpolation with 9 points"
+          title="this is Lagrange interpolation with 9 points"
+        />
+        <img
+          src="images/lagrange/Lagrange with 11 points.png"
+          alt="Lagrange interpolation with 11 points"
+          title="this is Lagrange interpolation with 11 points"
+        />
+      </details>
+    </aside>
+    <hr>
+
+    <h1>Newton method</h1>
+    <p>
+      For <code>f(x)=1/(1+25x^2)</code>&nbsp; we can see for each
+      interpolation when we add more points inside the intervale of
+      <code>[-5,5]</code>&nbsp;the absolute error decrease untill arrive to
+      minimum limit estimated by <code>1.78e-14</code>&nbsp; for <b>11</b> nodes
+      and <b>200</b> points (<code
+        >x = np.arange(self.lower,self. upper, 0.05)</code
+      >
+      when <code>self.lower=-5</code> and <code>self. upper=5</code>) &nbsp; so
+      this error value is smaller then <b>epsilon</b> and shows machine precision limit.
+    </p>
+
+    <table>
+      <tr>
+        <th>Nodes count</th>
+        <th>Error range</th>
+        <th>Command</th>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><b>[0.00e+00, 5.42e-02]</b></td>
+        <td colspan="3" class="Command">
+          <code>python main.py -n -f -x -5 -2.5 0 2.5 5 -i -5 5</code>
+        </td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><b>[0.00e+00, 2.18e-02]</b></td>
+        <td colspan="3" class="Command">
+          <code>python main.py -n -f -x -5 -3 -1 1 3 5 -i -5 5</code>
+        </td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td><b>[1.11e-16, 1.32e-03]</b></td>
+        <td colspan="3" class="Command">
+          <code>python main.py -n -f -x -5 -4 -2 -1 0 1 2 4 5 -i -5 5</code>
+        </td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td><b>[1.78e-14, 2.15e-04]</b></td>
+        <td colspan="3" class="Command">
+          <code>python main.py -n -f -x -5 -4 -3 -1 0 1 3 4 5 -i -5 5</code>
+        </td>
+      </tr>
+    </table>
+    
+    <h2>Error Analysis: Newton Method</h2>
+
+    <p>
+      The <b>interpolation error</b> for Newton's method is bounded by:
+    </p>
+
+    <pre>
+|f(x) - P(x)| ≤ (1/(n+1)!) * |f^(n+1)(ξ)| * |Π(x - x_i)|
+    </pre>
+
+    <p>where ξ is some point in the interpolation interval.</p>
+
+    <p><b>Key observations from our tests:</b></p>
+
+    <ul>
+      <li><b>Equidistant nodes:</b> Error oscillates severely near interval endpoints due to Runge phenomenon</li>
+      <li><b>Chebyshev nodes:</b> Error is more evenly distributed and significantly smaller near boundaries</li>
+      <li><b>Error reduction:</b> As degree increases from 5 to 11, maximum error decreases from ~0.05 to ~0.0002</li>
+      <li><b>Machine precision:</b> With 11 nodes, errors approach machine epsilon (1.78e-14), indicating convergence limits</li>
+    </ul>
+
+    <p>
+      The error plots (right subplot in each figure) clearly show that <b>Chebyshev nodes dramatically reduce oscillations</b> compared to equidistant spacing, especially at the boundaries of the interval [-5, 5].
+    </p>
+
+    <h2>Conclusion</h2>
+
+    <p>
+      <b>Newton method</b> is superior to Lagrange for iterative polynomial construction and evaluation due to its O(n) complexity versus Lagrange's O(n²). The divided differences approach allows efficient computation of coefficients that maintain numerical stability.
+    </p>
+
+    <p>
+      <b>Node selection matters:</b> Chebyshev nodes consistently outperform equidistant spacing in error reduction, particularly evident in the Runge phenomenon where equidistant nodes produce oscillations at interval boundaries.
+    </p>
+    <br />
+    <aside>
+      <details>
+        <summary>click to see the plots</summary>
+        <img
+          src="images/newton/degree 5.png"
+          alt="Newton interpolation with degree 5"
+          title="Newton interpolation with degree 5 - shows equidistant vs Chebyshev nodes and error curves"
+        />
+        <img
+          src="images/newton/degree 7.png"
+          alt="Newton interpolation with degree 7"
+          title="Newton interpolation with degree 7 - shows equidistant vs Chebyshev nodes and error curves"
+        />
+        <img
+          src="images/newton/degree 9.png"
+          alt="Newton interpolation with degree 9"
+          title="Newton interpolation with degree 9 - shows equidistant vs Chebyshev nodes and error curves"
+        />
+        <img
+          src="images/newton/degree 11.png"
+          alt="Newton interpolation with degree 11"
+          title="Newton interpolation with degree 11 - shows equidistant vs Chebyshev nodes and error curves"
+        />
+      </details>
+    </aside>
+    <hr />
+
+    <h1>2. Complexity Analysis of Newton and Lagrange Interpolation</h1>
+    <hr>
+
+    <p>
+      This section analyzes the relationship between <b>grid resolution</b> and
+      the number of arithmetic operations in the
+      <b>Newton and Lagrange interpolation polynomial</b>
+      implementation.
+    </p>
+    <h2>2.1 Newton interpolation method</h2>
+
+    <h2>2.1.1 Grid Resolution Definition</h2>
+
+    <div class="box">
+      <code>x = np.arange(self.lower, self.upper, 0.05)</code><br />
+      <b>Step = 0.05</b>
+    </div>
+
+    <p>This creates:</p>
+
+    <ul>
+      <li><b>Range:</b> -5 to 5 (span = 10)</li>
+      <li><b>Grid step size:</b> 0.05</li>
+      <li><b>Number of evaluation points:</b> 10 ÷ 0.05 = <b>200 points</b></li>
+    </ul>
+
+    <h2>2.1.2 Operation Count per Evaluation Point</h2>
+
+    <p>
+      For each grid point, the <code>eval_newton()</code> function evaluates the
+      polynomial.
+    </p>
+
+    <p><b>For 6 interpolation nodes (degree 5 polynomial):</b></p>
+
+    <ul>
+      <li>Loop iterations: 5</li>
+      <li>Operations per iteration:</li>
+      <ul>
+        <li>2 multiplications (product update)</li>
+        <li>1 subtraction <code>(x - points[i-1])</code></li>
+        <li>1 addition <code>(px += coeffs[i] * product)</code></li>
+      </ul>
+    </ul>
+    <pre>
+Total Operations = k × n
+    </pre>
+    <p>where <b>k</b> is algorithm complexity and <b>n</b> number of iterations</p>
+
+    <p><b>Total per evaluation point:</b></p>
+
+    <p><b>5 × 4 = 20 operations</b></p>
+
+    <h2>2.1.3 Operation count for ower program</h2>
+    <table>
+        <tr>
+            <th>Degree</th>
+            <th>iteration count</code></th>
+            <th>operations per point</th>
+            <th>200 points</th>
+            <th>curves count</th>
+            <th>totla</th>
+        </tr>
+        <tr>
+            <td>n=5</td>
+            <td>5</td>
+            <td>20 ops</td>
+            <td>4000</td>
+            <td>2</td>
+            <td>8000</td>
+        </tr>
+        <tr>
+            <td>n=7</td>
+            <td>7</td>
+            <td>28 ops</td>
+            <td>5600</td>
+            <td>2</td>
+            <td>11200</td>
+        </tr>
+        <tr>
+            <td>n=9</td>
+            <td>9</td>
+            <td>36 ops</td>
+            <td>7200</td>
+            <td>2</td>
+            <td>14400</td>
+        </tr>
+        <tr>
+            <td>n=11</td>
+            <td>11</td>
+            <td>44 ops</td>
+            <td>8800</td>
+            <td>2</td>
+            <td>17600</td>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>51200</td>
+        </tr>
+
+    </table>
+    <br><br>
+    <h2>2.1.4 Grid Resolution Impact</h2>
+    
+
+    <table>
+      <tr>
+        <th>Step Size</th>
+        <th>Grid Points</th>
+        <th>Ops per Curve</th>
+        <th>Reduction</th>
+        <th>Overall Impact</th>
+      </tr>
+
+      <tr>
+        <td>0.05</td>
+        <td>200</td>
+        <td>4,000</td>
+        <td>referenced</td>
+        <td>48,000&nbsp;<small>52,160 actual (with error curves)</small></td>
+      </tr>
+
+      <tr>
+        <td>0.10</td>
+        <td>100</td>
+        <td>2,000</td>
+        <td>50%</td>
+        <td>24,000&nbsp;<small>26,560 actual (with error curves)</small></td>
+      </tr>
+
+      <tr>
+        <td>0.15</td>
+        <td>67</td>
+        <td>1,340</td>
+        <td>67%</td>
+        <td>16,080&nbsp;<small>18,112 actual (with error curves)</small></td>
+      </tr>
+
+      <tr>
+        <td>0.20</td>
+        <td>50</td>
+        <td>1,000</td>
+        <td>75% </td>
+        <td>8,570 <small>13866 with additional overhead</small></td>
+      </tr>
+
+      <tr>
+        <td>0.25</td>
+        <td>40</td>
+        <td>800</td>
+        <td>80% </td>
+        <td>6,856 <small>11306 with additional overhead</small></td>
+      </tr>
+    </table>
+
+    <h2>2.2 Lagrange Method Complexity Analysis</h2>
+
+    <p>
+      The <b>Lagrange interpolation</b> method constructs the polynomial directly using basis functions:
+    </p>
+
+    <pre>
+L(x) = Σ(y_i * l_i(x))
+where l_i(x) = Π((x - x_j)/(x_i - x_j)) for j ≠ i
+    </pre>
+
+    <p><b>Complexity per evaluation point with n nodes:</b></p>
+
+    <ul>
+      <li>For each basis function l_i(x): (n-1) multiplications and (n-1) divisions</li>
+      <li>For all n basis functions: n × (n-1) multiplications + n × (n-1) divisions</li>
+      <li>Final sum: (n-1) additions</li>
+    </ul>
+
+    <p><b>Total Lagrange per point:</b> O(n²) operations</p>
+
+    <p>
+      For comparison with Newton (O(n) per point), Lagrange is more computationally expensive as the degree increases. However, when interpolation points are fixed and only evaluation points change, Lagrange can be optimized through precomputation.
+    </p>
+
+    <h2>2.2.1 Complexity Comparison: Newton vs Lagrange</h2>
+
+    <table>
+      <tr>
+        <th>Method</th>
+        <th>Ops per Point (n=5)</th>
+        <th>Ops per Point (n=11)</th>
+        <th>Scalability</th>
+      </tr>
+      <tr>
+        <td><b>Newton</b></td>
+        <td>20 ops</td>
+        <td>44 ops</td>
+        <td>O(n) - Linear</td>
+      </tr>
+      <tr>
+        <td><b>Lagrange</b></td>
+        <td>~60 ops</td>
+        <td>~264 ops</td>
+        <td>O(n²) - Quadratic</td>
+      </tr>
+    </table>
+
+    <p>
+      Newton's method is significantly more efficient for high-degree polynomials and large evaluation grids. As polynomial degree increases, Newton interpolation maintains better computational efficiency compared to direct Lagrange evaluation.
+    </p>
+
+    
+
+<hr />
+  </body>
+</html>
