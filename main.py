@@ -1,6 +1,6 @@
 import argparse
-from ex1 import Lagrange
-from ex2 import Newton
+from lagrange import Lagrange
+from newton import Newton
 import numpy as np
 
 def main():
